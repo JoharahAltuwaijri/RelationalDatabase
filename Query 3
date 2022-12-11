@@ -1,0 +1,26 @@
+
+
+SELECT
+   DATE_PART('month', renm.rental_date) as rental_month,
+   DATE_PART('year', renm.rental_date) as rental_year,
+   (
+      '' || store.store_id 
+   )
+   as store_id,
+   COUNT(*) 
+FROM
+   store as store 
+   JOIN
+      staff as staff 
+      ON store.store_id = staff.store_id 
+   JOIN
+      rental renm 
+      ON staff.staff_id = renm.staff_id 
+GROUP BY
+   1,
+   2,
+   3 
+ORDER BY
+   2,
+   1;
+   
