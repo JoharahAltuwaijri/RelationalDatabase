@@ -1,0 +1,30 @@
+
+
+SELECT
+   flm.title,
+   cat.name,
+   flm.rental_duration,
+   NTILE(4) OVER ( 
+ORDER BY
+   flm.rental_duration) as standard_quartile 
+FROM
+   film_category flmcat 
+   JOIN
+      category cat 
+      ON cat.category_id = flmcat.category_id 
+   JOIN
+      film flm 
+      ON flm.film_id = flmcat.film_id 
+WHERE
+   cat.name IN 
+   (
+      'Animation',
+      'Children',
+      'Classics',
+      'Comedy',
+      'Family' 
+   )
+ORDER BY
+   3;
+   
+   
