@@ -1,0 +1,21 @@
+
+
+SELECT DISTINCT
+  film_title,
+  category_name,
+  COUNT(rental_id) OVER (PARTITION BY film_title) AS rental_count
+FROM (SELECT
+  flm.title film_title,
+  cat.name category_name,
+  ren.rental_id rental_id
+FROM film flm
+JOIN film_category flmcat
+  ON flmcat.film_id = flm.film_id
+JOIN category cat
+  ON cat.category_id = flmcat.category_id
+JOIN inventory i
+  ON i.film_id = flm.film_id
+JOIN rental ren
+  ON ren.inventory_id = i.inventory_id) table1
+ORDER BY category_name, film_title;
+
